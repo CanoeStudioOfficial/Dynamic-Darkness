@@ -51,3 +51,9 @@ darkness.main.mindarkness.byid.tooltip=Уровень минимальной т�
 
 darkness.main.mindarkness.byname=Минимальная тьма по названию
 darkness.main.mindarkness.byname.tooltip=Уровень минимальной тьмы по названию измерения. Формат: 'Название:Уровень' (например, 'overworld:5').
+
+darkness.main.darknessstrength=Сила тьмы
+darkness.main.darknessstrength.tooltip=Общая сила тьмы (0.0 - 1.0). 0.0 - ванильная, 1.0 - полная тьма.
+
+darkness.main.darkenblocklight=Затемнять свет блоков
+darkness.main.darkenblocklight.tooltip=Нужно ли затемнять свет от блоков (факелы и т.д.).

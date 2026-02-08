@@ -15,6 +15,13 @@ public final class ModConfig {
     public static boolean darkNetherFog = true;
     public static boolean darkEndFog = true;
 
+    @Config.Comment("Overall darkness strength (0.0 - 1.0). 0.0 is vanilla, 1.0 is full darkness.")
+    @Config.RangeDouble(min = 0.0, max = 1.0)
+    public static float darknessStrength = 1.0f;
+
+    @Config.Comment("Whether to darken block lights (torches, etc.).")
+    public static boolean darkenBlockLight = true;
+
     public static boolean hardcore = false;
     public static float[] moonPhaseFactors = {};
 

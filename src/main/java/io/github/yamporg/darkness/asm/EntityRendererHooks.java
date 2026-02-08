@@ -34,6 +34,12 @@ public final class EntityRendererHooks {
         if (blacklistDim(world.provider)) {
             return;
         }
+
+        // Fix: If darkness is disabled for this dimension and strength is 0, don't touch the lightmap.
+        if (!isDark(world.provider, world.provider.getDimensionType()) && ModConfig.darknessStrength <= 0f) {
+            return;
+        }
+
         updateLuminance(renderer, partialTicks, world);
     }
 
@@ -215,7 +221,7 @@ public final class EntityRendererHooks {
             }
 
             float blockFactor = 1f;
-            if (dimDark) {
+            if (dimDark && ModConfig.darkenBlockLight) {
                 blockFactor = 1f - blockIndex / 15f;
                 blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
             }
@@ -271,7 +277,18 @@ public final class EntityRendererHooks {
             if (lTarget < minLuminance) {
                 lTarget = minLuminance;
             }
+
             int c = renderer.lightmapColors[i];
+
+            // Fix: Apply darkness strength by blending between original luminance and target luminance.
+            if (ModConfig.darknessStrength < 1.0f) {
+                final float r = (c & 0xFF) / 255f;
+                final float g = ((c >> 8) & 0xFF) / 255f;
+                final float b = ((c >> 16) & 0xFF) / 255f;
+                final float lOriginal = luminance(r, g, b);
+                lTarget = lerp(ModConfig.darknessStrength, lOriginal, lTarget);
+            }
+
             renderer.lightmapColors[i] = darken(c, lTarget);
         }
     }

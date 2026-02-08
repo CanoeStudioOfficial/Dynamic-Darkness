@@ -51,3 +51,9 @@ darkness.main.mindarkness.byid.tooltip=Minimum darkness level by dimension ID. F
 
 darkness.main.mindarkness.byname=Minimum Darkness by Name
 darkness.main.mindarkness.byname.tooltip=Minimum darkness level by dimension name. Format: 'Name:Level' (e.g. 'overworld:5').
+
+darkness.main.darknessstrength=Darkness Strength
+darkness.main.darknessstrength.tooltip=Overall darkness strength (0.0 - 1.0). 0.0 is vanilla, 1.0 is full darkness.
+
+darkness.main.darkenblocklight=Darken Block Light
+darkness.main.darkenblocklight.tooltip=Whether to darken block lights (torches, etc.).
