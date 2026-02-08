@@ -39,3 +39,15 @@ darkness.main.blacklistbyname.tooltip=Blacklist dimensions by name. List availab
 
 darkness.main.disableconfiggui=Disable config GUI
 darkness.main.disableconfiggui.tooltip=Disables in-game config GUI.
+
+darkness.main.mindarkness=Minimum Darkness
+darkness.main.mindarkness.tooltip=Configure minimum darkness thresholds for dimensions.
+
+darkness.main.mindarkness.defaultmin=Default Minimum Darkness
+darkness.main.mindarkness.defaultmin.tooltip=Default minimum darkness level (0-15) for all dimensions.
+
+darkness.main.mindarkness.byid=Minimum Darkness by ID
+darkness.main.mindarkness.byid.tooltip=Minimum darkness level by dimension ID. Format: 'ID:Level' (e.g. '0:5').
+
+darkness.main.mindarkness.byname=Minimum Darkness by Name
+darkness.main.mindarkness.byname.tooltip=Minimum darkness level by dimension name. Format: 'Name:Level' (e.g. 'overworld:5').

@@ -7,8 +7,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class EntityRendererHooks {
+    private static final Logger LOGGER = LogManager.getLogger("darkness");
+
     public static void onUpdateLightmap(EntityRenderer renderer, float partialTicks) {
         if (!renderer.lightmapUpdateNeeded) {
             return;
@@ -31,6 +35,55 @@ public final class EntityRendererHooks {
             return;
         }
         updateLuminance(renderer, partialTicks, world);
+    }
+
+    private static int getMinDarkness(WorldProvider dim) {
+        String dimName = dim.getDimensionType().getName();
+        int dimID = dim.getDimension();
+
+        // Check by name
+        for (String entry : ModConfig.minDarkness.byName) {
+            int sep = entry.lastIndexOf(':');
+            if (sep == -1) {
+                continue;
+            }
+            String name = entry.substring(0, sep).trim();
+            if (name.equalsIgnoreCase(dimName)) {
+                try {
+                    int level = Integer.parseInt(entry.substring(sep + 1).trim());
+                    if (level >= 0 && level <= 15) {
+                        return level;
+                    } else {
+                        LOGGER.warn("Invalid minimum darkness level for dimension name {}: {}. Must be between 0 and 15.", dimName, level);
+                    }
+                } catch (NumberFormatException e) {
+                    LOGGER.warn("Invalid minimum darkness format for dimension name {}: {}. Expected 'Name:Level'.", dimName, entry);
+                }
+            }
+        }
+
+        // Check by ID
+        for (String entry : ModConfig.minDarkness.byID) {
+            int sep = entry.lastIndexOf(':');
+            if (sep == -1) {
+                continue;
+            }
+            try {
+                int id = Integer.parseInt(entry.substring(0, sep).trim());
+                if (id == dimID) {
+                    int level = Integer.parseInt(entry.substring(sep + 1).trim());
+                    if (level >= 0 && level <= 15) {
+                        return level;
+                    } else {
+                        LOGGER.warn("Invalid minimum darkness level for dimension ID {}: {}. Must be between 0 and 15.", dimID, level);
+                    }
+                }
+            } catch (NumberFormatException e) {
+                LOGGER.warn("Invalid minimum darkness format for dimension ID {}: {}. Expected 'ID:Level'.", dimID, entry);
+            }
+        }
+
+        return ModConfig.minDarkness.defaultMin;
     }
 
     private static boolean blacklistDim(WorldProvider dim) {
@@ -127,6 +180,8 @@ public final class EntityRendererHooks {
 
         // Light to brightness float[16] conversion table.
         float[] brightnessTable = dim.getLightBrightnessTable();
+        int minLevel = getMinDarkness(dim);
+        float minLuminance = brightnessTable[minLevel];
 
         boolean dimDark = isDark(dim, dimType);
 
@@ -213,6 +268,9 @@ public final class EntityRendererHooks {
             blue = MathHelper.clamp(blue, 0f, 1f);
 
             float lTarget = luminance(red, green, blue);
+            if (lTarget < minLuminance) {
+                lTarget = minLuminance;
+            }
             int c = renderer.lightmapColors[i];
             renderer.lightmapColors[i] = darken(c, lTarget);
         }
