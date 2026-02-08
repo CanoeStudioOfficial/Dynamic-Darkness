@@ -1,1 +1,0 @@
-- Updated ForgeGradle and other development dependencies to their latest versions.
