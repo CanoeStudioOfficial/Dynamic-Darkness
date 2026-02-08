@@ -4,6 +4,7 @@ import io.github.yamporg.darkness.ModConfig;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.block.material.Material;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
@@ -32,6 +33,11 @@ public final class EntityRendererHooks {
         }
         // Check against dimension blacklist.
         if (blacklistDim(world.provider)) {
+            return;
+        }
+
+        // Fix: If darkness in water is disabled and player is in water, don't touch the lightmap.
+        if (!ModConfig.darkenInWater && renderer.mc.player.isInsideOfMaterial(Material.WATER)) {
             return;
         }
 

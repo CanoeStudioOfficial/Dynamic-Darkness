@@ -57,3 +57,6 @@ darkness.main.darknessstrength.tooltip=Общая сила тьмы (0.0 - 1.0).
 
 darkness.main.darkenblocklight=Затемнять свет блоков
 darkness.main.darkenblocklight.tooltip=Нужно ли затемнять свет от блоков (факелы и т.д.).
+
+darkness.main.darkeninwater=Тьма в воде
+darkness.main.darkeninwater.tooltip=Нужно ли применять эффект тьмы, когда игрок находится под водой.

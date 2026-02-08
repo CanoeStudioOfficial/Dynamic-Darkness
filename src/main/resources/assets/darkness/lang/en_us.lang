@@ -57,3 +57,6 @@ darkness.main.darknessstrength.tooltip=Overall darkness strength (0.0 - 1.0). 0.
 
 darkness.main.darkenblocklight=Darken Block Light
 darkness.main.darkenblocklight.tooltip=Whether to darken block lights (torches, etc.).
+
+darkness.main.darkeninwater=Darken in Water
+darkness.main.darkeninwater.tooltip=Whether to darken when the player is underwater.

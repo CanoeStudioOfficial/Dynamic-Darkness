@@ -22,6 +22,9 @@ public final class ModConfig {
     @Config.Comment("Whether to darken block lights (torches, etc.).")
     public static boolean darkenBlockLight = true;
 
+    @Config.Comment("Whether to darken when underwater.")
+    public static boolean darkenInWater = true;
+
     public static boolean hardcore = false;
     public static float[] moonPhaseFactors = {};
 
